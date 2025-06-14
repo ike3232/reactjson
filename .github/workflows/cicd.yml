@@ -13,16 +13,16 @@ jobs:
       - name: Login to docker hub
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
       - name: Build Docker Image
-        run: docker build -t ik3232/reactjson --build-arg REACT_APP_NODE_ENV='production' --build-arg REACT_APP_SERVER_BASE_URL='${{ secrets.REACT_APP_SERVER_BASE_URL }}' .
+        run: docker build -t ik3232/react-app --build-arg REACT_APP_NODE_ENV='production' --build-arg REACT_APP_SERVER_BASE_URL='${{ secrets.REACT_APP_SERVER_BASE_URL }}' .
       - name: Publish Image to docker hub
-        run: docker push ik3232/reactjson:latest
+        run: docker push ik3232/react-app:latest
   deploy:
     needs: build
     runs-on: self-hosted
     steps:
       - name: Pull image from docker hub
-        run: docker pull ik3232/reactjson:latest
+        run: docker pull ik3232/react-app:latest
       - name: Delete old container
-        run: docker rm -f reactjson-container
+        run: docker rm -f react-app-container
       - name: Run Docker Container
-        run: docker run -d -p 3000:80 --name reactjson-container ik3232/reactjson
+        run: docker run -d -p 3000:80 --name react-app-container ik3232/react-app
