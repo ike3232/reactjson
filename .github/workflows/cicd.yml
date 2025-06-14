@@ -3,7 +3,7 @@ name: Deploy React Application
 on:
   push:
     branches:
-      - mern-ec2-docker-ssl
+      - react-main
 jobs:
   build:
     runs-on: ubuntu-latest
